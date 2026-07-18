@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>*~*~* Solar Energy-Crypto *~*~*</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Bungee&family=VT323&family=Comic+Neue:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#ff3ea5; --purple:#b026ff; --cyan:#00e5ff; --lime:#c6ff00; --yellow:#ffe600;
+    --void:#0a0014; --panel:#fdfdfd; --ink:#111; --silver:#c0c0c0; --link:#0000EE;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--void);
+    color:#fff;
+    font-family:'Comic Neue', cursive, sans-serif;
+    overflow-x:hidden;
+    cursor:default;
+  }
+  /* twinkling starfield */
+  .stars{ position:fixed; inset:0; z-index:-2;
+    background-image:
+      radial-gradient(2px 2px at 10% 20%, #fff, transparent),
+      radial-gradient(2px 2px at 80% 10%, var(--cyan), transparent),
+      radial-gradient(1.5px 1.5px at 60% 70%, #fff, transparent),
+      radial-gradient(2px 2px at 30% 85%, var(--pink), transparent),
+      radial-gradient(1.5px 1.5px at 90% 60%, var(--lime), transparent),
+      radial-gradient(2px 2px at 45% 40%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 20% 60%, var(--yellow), transparent);
+    background-repeat:repeat; background-size:300px 300px;
+    animation: twinkle 3s ease-in-out infinite alternate;
+  }
+  @keyframes twinkle{ from{opacity:0.5;} to{opacity:1;} }
+  @media (prefers-reduced-motion: reduce){ .stars{animation:none;} }
+
+  .marquee-bar{ background:#000; border-top:3px solid var(--pink); border-bottom:3px solid var(--pink); overflow:hidden; white-space:nowrap; padding:6px 0; }
+  .marquee-track{ display:inline-block; padding-left:100%; animation: scroll 20s linear infinite;
+    font-family:'VT323', monospace; font-size:20px; color:var(--lime); letter-spacing:1px; }
+  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-100%);} }
+  @media (prefers-reduced-motion: reduce){ .marquee-track{animation:none; padding-left:0;} }
+
+  header.hero{ text-align:center; padding:50px 16px 30px; position:relative; }
+  .badge-row{ display:flex; justify-content:center; gap:10px; margin-bottom:18px; flex-wrap:wrap; }
+  .badge{ font-family:'Press Start 2P'; font-size:9px; background:var(--yellow); color:#000; padding:5px 8px;
+    border:2px solid #000; box-shadow:3px 3px 0 #000; animation: blink 1.4s steps(2) infinite; }
+  .badge.b2{ background:var(--lime); animation-delay:0.3s; }
+  .badge.b3{ background:var(--cyan); animation-delay:0.6s; }
+  @keyframes blink{ 50%{ opacity:0.35; } }
+  @media (prefers-reduced-motion: reduce){ .badge{animation:none;} }
+
+  h1.title{
+    font-family:'Bungee', cursive; font-size:clamp(1.8rem, 7vw, 3.6rem); line-height:1.15;
+    background:linear-gradient(90deg, var(--pink), var(--yellow), var(--cyan), var(--lime), var(--purple), var(--pink));
+    background-size:400% 100%; -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation: glitter 5s linear infinite;
+    text-shadow: 0 0 30px rgba(255,62,165,0.3);
+    margin-bottom:16px;
+  }
+  @keyframes glitter{ to{ background-position:400% 0; } }
+  @media (prefers-reduced-motion: reduce){ h1.title{animation:none; background-position:0 0;} }
+
+  .sub{ font-family:'VT323', monospace; font-size:1.3rem; color:var(--cyan); max-width:560px; margin:0 auto; }
+  .hero-tag{ font-family:'Press Start 2P'; font-size:9px; color:var(--lime); margin-top:22px; letter-spacing:0.05em; }
+
+  .wrap{ max-width:880px; margin:0 auto; padding:0 16px 60px; }
+
+  /* windows */
+  .win{ background:var(--panel); border:3px solid #000; box-shadow:6px 6px 0 #000; margin:36px 0;
+    opacity:0; transform:translateY(16px) rotate(-0.3deg); transition:opacity 0.6s ease, transform 0.6s ease; }
+  .win.in{ opacity:1; transform:translateY(0) rotate(0deg); }
+  .win-titlebar{ background:linear-gradient(90deg, var(--pink), var(--purple)); color:#fff;
+    font-family:'Press Start 2P'; font-size:10px; padding:9px 10px; display:flex; justify-content:space-between;
+    align-items:center; border-bottom:3px solid #000; }
+  .win-titlebar .win-btns{ display:flex; gap:5px; }
+  .win-btn{ width:15px; height:15px; background:var(--silver); border:1px solid #000; font-size:9px;
+    display:flex; align-items:center; justify-content:center; color:#000; font-family:monospace; }
+  .win-body{ padding:24px 22px; color:var(--ink); }
+  .win-body h2{ font-family:'Bungee', cursive; font-size:1.25rem; color:var(--purple); margin-bottom:10px; }
+  .win-body h3{ font-family:'Bungee', cursive; font-size:1.02rem; color:#111; margin-bottom:8px; }
+  .win-body p{ font-size:0.95rem; line-height:1.55; margin-bottom:10px; }
+  .win-body .desc{ color:#444; font-size:0.9rem; margin-bottom:18px; }
+  .status-chip{ display:inline-block; font-family:'Press Start 2P'; font-size:8px; padding:4px 7px;
+    border:2px solid #000; margin-bottom:12px; }
+  .status-chip.doc{ background:var(--lime); }
+  .status-chip.live{ background:var(--cyan); }
+  .status-chip.proj{ background:var(--yellow); }
+
+  .stats-row{ display:flex; gap:18px; flex-wrap:wrap; margin-top:16px; }
+  .stat{ min-width:150px; background:#fff; border:2px dashed var(--purple); padding:10px 12px; }
+  .stat .num{ font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:1.2rem; color:var(--pink); }
+  .stat .lbl{ font-size:11px; color:#555; margin-top:4px; line-height:1.4; }
+  .cite{ color:var(--purple); font-size:10px; vertical-align:super; }
+
+  .cards{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .card{ border:2px solid #000; padding:16px; background:repeating-linear-gradient(135deg, #fff, #fff 10px, #fdf3fa 10px, #fdf3fa 20px); }
+  .card .idx{ font-family:'Press Start 2P'; font-size:8px; color:var(--purple); margin-bottom:10px; }
+  .card h4{ font-family:'Bungee'; font-size:0.9rem; margin-bottom:6px; }
+  .card p{ font-size:0.85rem; color:#333; }
+
+  .bars-grid{ display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:14px; }
+  .bar-block h4{ font-family:'Press Start 2P'; font-size:9px; color:var(--purple); margin-bottom:14px; }
+  .bar-row{ display:grid; grid-template-columns:46px 1fr 74px; align-items:center; gap:8px; margin-bottom:12px; }
+  .bar-row .yr{ font-family:'IBM Plex Mono', monospace; font-size:11px; }
+  .bar-track{ height:14px; background:#eee; border:2px solid #000; }
+  .bar-fill{ height:100%; width:0%; transition:width 1.1s ease; }
+  .bar-row.solar .bar-fill{ background:repeating-linear-gradient(45deg, var(--yellow), var(--yellow) 6px, var(--pink) 6px, var(--pink) 12px); }
+  .bar-row.asic .bar-fill{ background:repeating-linear-gradient(45deg, var(--cyan), var(--cyan) 6px, var(--purple) 6px, var(--purple) 12px); }
+  .bar-row .val{ font-family:'IBM Plex Mono', monospace; font-size:11px; text-align:right; }
+  .bar-delta{ font-family:'VT323', monospace; font-size:15px; color:#555; margin-top:2px; }
+  .chart-caption{ font-family:'VT323', monospace; font-size:14px; color:#666; margin-top:16px; }
+
+  .caveat{ background:var(--yellow); border:2px solid #000; padding:14px 16px; margin-top:20px; }
+  .caveat .lbl{ font-family:'Press Start 2P'; font-size:8px; margin-bottom:8px; display:block; }
+  .caveat p{ font-size:0.85rem; color:#111; }
+
+  .sources ol{ list-style:none; counter-reset:src; }
+  .sources li{ counter-increment:src; font-size:12.5px; color:#333; margin-bottom:12px; padding-left:26px;
+    position:relative; line-height:1.5; font-family:'IBM Plex Mono', monospace; }
+  .sources li::before{ content:"[" counter(src) "]"; position:absolute; left:0; color:var(--pink); font-weight:600; }
+  .sources li a{ color:var(--link); text-decoration:underline; word-break:break-word; }
+
+  .counter-widget{ display:inline-flex; align-items:center; gap:8px; background:#000; border:2px solid var(--lime);
+    padding:6px 10px; font-family:'VT323', monospace; font-size:16px; color:var(--lime); margin-top:6px; }
+  .counter-digits{ background:#111; padding:2px 6px; letter-spacing:2px; border:1px solid var(--lime); }
+
+  footer{ text-align:center; padding:40px 16px 70px; }
+  footer .construction{ display:inline-block; font-family:'Press Start 2P'; font-size:9px; background:repeating-linear-gradient(45deg, var(--yellow), var(--yellow) 8px, #000 8px, #000 16px);
+    color:#000; padding:8px 14px; border:2px solid #000; margin-bottom:16px; }
+  footer p{ font-family:'VT323', monospace; font-size:16px; color:var(--cyan); margin-bottom:6px; }
+  footer .built{ color:#888; font-size:13px; margin-top:14px; }
+  footer a{ color:var(--pink); }
+
+  @media (max-width:640px){ .cards{ grid-template-columns:1fr; } .bars-grid{ grid-template-columns:1fr; } }
+
+  .signature{ display:inline-flex; align-items:center; gap:12px; background:#000; border:2px solid var(--lime);
+    padding:10px 16px; margin-bottom:22px; box-shadow:4px 4px 0 var(--pink); }
+  .signature .pfp{ width:46px; height:46px; border-radius:50%; border:2px solid var(--lime);
+    box-shadow:0 0 10px var(--lime), 0 0 4px var(--pink) inset; object-fit:cover; }
+  .signature .sig-text{ font-family:'Press Start 2P'; font-size:10px; color:var(--lime); text-shadow:0 0 6px var(--lime); }
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<div class="marquee-bar">
+  <div class="marquee-track">★彡 100% SOURCED DATA ONLY 彡★ &nbsp;&nbsp;&nbsp; NOT FINANCIAL OR ENGINEERING ADVICE &nbsp;&nbsp;&nbsp; ☼ SOLAR GO BRRRR ☼ &nbsp;&nbsp;&nbsp; CLICK THE FOOTNOTES, VERIFY EVERYTHING &nbsp;&nbsp;&nbsp; ★彡 100% SOURCED DATA ONLY 彡★</div>
+</div>
+
+<header class="hero">
+  <div class="badge-row">
+    <span class="badge">★ NEW ★</span>
+    <span class="badge b2">100% CITED</span>
+    <span class="badge b3">NO CAP</span>
+  </div>
+  <h1 class="title">Sunlight, stored,<br>then hashed.</h1>
+  <p class="sub">what's documented, what's already happening, and what's a real-but-unproven bet — sourced, not vibes</p>
+  <div class="hero-tag">◆ LAST CHECKED JULY 2026 ◆ SCROLL FOR THE RECEIPTS ◆</div>
+</header>
+
+<div class="wrap">
+
+  <div class="win" data-win>
+    <div class="win-titlebar"><span>STAGE_01.exe — bitcoins_energy_mix</span><div class="win-btns"><div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div></div></div>
+    <div class="win-body">
+      <span class="status-chip doc">✔ DOCUMENTED</span>
+      <h3>Solar is real in mining's mix — but it's the smallest slice</h3>
+      <p class="desc">Bitcoin mining's overall sustainable mix has grown a lot. But solar specifically is still the minority player next to hydro and wind — easy to assume otherwise, so let's not.</p>
+      <div class="stats-row">
+        <div class="stat"><div class="num">52.4%<span class="cite">[1]</span></div><div class="lbl">of BTC mining electricity from sustainable sources, 2025 Cambridge survey</div></div>
+        <div class="stat"><div class="num">3.2%<span class="cite">[1]</span></div><div class="lbl">solar's share of the mix — vs. 23.4% hydro, 15.4% wind</div></div>
+        <div class="stat"><div class="num">48% sample<span class="cite">[1]</span></div><div class="lbl">of global hashrate covered — real number, incomplete picture</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="win" data-win>
+    <div class="win-titlebar"><span>STAGE_02.exe — grid_shock_absorber</span><div class="win-btns"><div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div></div></div>
+    <div class="win-body">
+      <span class="status-chip live">⚡ ALREADY LIVE</span>
+      <h3>Miners are already paid to protect the Texas grid</h3>
+      <p class="desc">Not a projection — ERCOT runs a formal program paying big flexible loads, miners included, to cut power in seconds during grid stress. Solar-adjacent, not solar-exclusive: it works for any generation mix.</p>
+      <div class="stats-row">
+        <div class="stat"><div class="num">$24.2M<span class="cite">[2]</span></div><div class="lbl">paid to a single miner in curtailment credits, Aug 2023</div></div>
+        <div class="stat"><div class="num">$30.6M<span class="cite">[3]</span></div><div class="lbl">Riot Platforms' curtailment credits, Q3 2025 alone</div></div>
+        <div class="stat"><div class="num">50,000+ MWh<span class="cite">[4]</span></div><div class="lbl">curtailed in one month during 2022's summer heat event</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="win" data-win>
+    <div class="win-titlebar"><span>STAGE_03.exe — where_it_could_go</span><div class="win-btns"><div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div></div></div>
+    <div class="win-body">
+      <span class="status-chip proj">◆ PROJECTION</span>
+      <h3>Two real cost curves, if they keep falling</h3>
+      <p class="desc">Not documented fact — a reasonable read of two independently tracked trends. If solar-plus-storage costs and ASIC efficiency both keep falling, more remote sites become minable. That "if" is doing real work — see the caveat down in the chart window.</p>
+      <div class="stats-row">
+        <div class="stat"><div class="num">−90%<span class="cite">[5]</span></div><div class="lbl">global solar LCOE decline, 2010 → 2024 (IRENA)</div></div>
+        <div class="stat"><div class="num">~80 → ~10 J/TH<span class="cite">[6]</span></div><div class="lbl">frontier ASIC chip efficiency, 2016 vs. 2026 flagship</div></div>
+        <div class="stat"><div class="num">31.2 J/TH<span class="cite">[7]</span></div><div class="lbl">network-wide AVERAGE was still only here in late 2024 — old rigs linger</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="win" data-win>
+    <div class="win-titlebar"><span>MECHANISMS.txt — why_it_holds_up</span><div class="win-btns"><div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div></div></div>
+    <div class="win-body">
+      <h2>Four reasons this isn't just vibes</h2>
+      <p class="desc">Grounded in the documented stages above, not the projected one.</p>
+      <div class="cards">
+        <div class="card"><div class="idx">01 // INTERRUPTIBLE LOAD</div><h4>ASICs cut power in seconds</h4><p>A mining fleet drops to near zero on a dispatch signal, no equipment damage — exactly what ERCOT's Large Flexible Load program is built around.<span class="cite">[2]</span></p></div>
+        <div class="card"><div class="idx">02 // PAID, NOT THEORETICAL</div><h4>Curtailment revenue is real money today</h4><p>Not hypothetical grid credits — Riot Platforms alone reported $30.6M in curtailment credits in a single quarter.<span class="cite">[3]</span></p></div>
+        <div class="card"><div class="idx">03 // SMALL BUT REAL SOLAR ROLE</div><h4>Solar is a minority input, not the majority</h4><p>Roughly 3.2% of Bitcoin's current mix<span class="cite">[1]</span> — a claim that solar already powers most of mining today would be wrong.</p></div>
+        <div class="card"><div class="idx">04 // TWO REAL TRENDS</div><h4>Falling costs, independently documented</h4><p>Solar LCOE and ASIC efficiency are tracked by different orgs for different reasons, both falling for over a decade.<span class="cite">[5][6]</span></p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="win" data-win>
+    <div class="win-titlebar"><span>RECEIPTS.chart — the_two_curves</span><div class="win-btns"><div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div></div></div>
+    <div class="win-body">
+      <h2>Solar costs & ASIC power draw, before vs. now</h2>
+      <p class="desc">Actual reported figures at the years shown — not interpolated. No data points invented between them.</p>
+      <div class="bars-grid">
+        <div class="bar-block">
+          <h4>SOLAR LCOE, GLOBAL AVG [5]</h4>
+          <div class="bar-row solar"><div class="yr">2010</div><div class="bar-track"><div class="bar-fill" data-target="100"></div></div><div class="val">$0.417/kWh</div></div>
+          <div class="bar-row solar"><div class="yr">2024</div><div class="bar-track"><div class="bar-fill" data-target="10.3"></div></div><div class="val">$0.043/kWh</div></div>
+          <div class="bar-delta">↓ 90% over 14 yrs, per IRENA</div>
+        </div>
+        <div class="bar-block">
+          <h4>FRONTIER ASIC EFFICIENCY [6]</h4>
+          <div class="bar-row asic"><div class="yr">2016</div><div class="bar-track"><div class="bar-fill" data-target="100"></div></div><div class="val">~80 J/TH</div></div>
+          <div class="bar-row asic"><div class="yr">2026</div><div class="bar-track"><div class="bar-fill" data-target="12.5"></div></div><div class="val">~10 J/TH</div></div>
+          <div class="bar-delta">↓ ~87% flagship-to-flagship</div>
+        </div>
+      </div>
+      <div class="chart-caption">&gt; bars scaled within their own block only. don't compare heights across blocks. &lt;</div>
+      <div class="caveat">
+        <span class="lbl">⚠ IMPORTANT CAVEAT ⚠</span>
+        <p>The "frontier" number is the best chip released that year, not what the network runs — real network-wide average was still 31.2 J/TH in late 2024, because old rigs stay in operation for years.<span class="cite">[7]</span> This gap is the #1 reason Stage 3 is a projection, not a fact.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="win" data-win>
+    <div class="win-titlebar"><span>FUTURE_TECH.exe — theory_zone</span><div class="win-btns"><div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div></div></div>
+    <div class="win-body">
+      <span class="status-chip proj">◆ THEORY / ROADMAP</span>
+      <h2>What's next — company targets & analyst projections, clearly labeled</h2>
+      <p class="desc">Everything in this window is either a company's own announced target or an analyst's forward projection — not a delivered, verified result. Treat it as "where people who build this stuff say it's headed," not as fact.</p>
+      <div class="stats-row">
+        <div class="stat"><div class="num">~5 J/TH<span class="cite">[8]</span></div><div class="lbl">Bitdeer's announced target for its SEALMINER A4 chip — a company claim, not yet verified at scale</div></div>
+        <div class="stat"><div class="num">10.45 J/TH<span class="cite">[9]</span></div><div class="lbl">Triple-1's Kamikaze III, a real 3nm chip already taped out — shows sub-11 J/TH is achievable today, not just theory</div></div>
+        <div class="stat"><div class="num">−30% by 2030<span class="cite">[10]</span></div><div class="lbl">IRENA's own projection for further firm solar+storage cost declines, on top of the 90% drop already booked</div></div>
+        <div class="stat"><div class="num">2nm next<span class="cite">[11]</span></div><div class="lbl">chipmakers' publicly stated process-node roadmap, expected to push efficiency below today's sub-10 J/TH floor</div></div>
+      </div>
+      <div class="caveat">
+        <span class="lbl">⚠ WHY THIS MATTERS ⚠</span>
+        <p>If both roadmaps land anywhere close to on-target, the case for solar-paired mining in remote, high-irradiance regions gets stronger every year — but company efficiency targets in this industry have historically slipped, and IRENA's own projection is a range, not a guarantee. Read this window as "the bull case, sourced" — not a prediction.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="win" data-win>
+    <div class="win-titlebar"><span>SOURCES.txt — click_to_verify</span><div class="win-btns"><div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div></div></div>
+    <div class="win-body sources">
+      <h2>Every number, traceable</h2>
+      <ol>
+        <li>Cambridge Centre for Alternative Finance, <em>Digital Mining Industry Report</em>, April 2025 — sustainable mix, solar/hydro/wind shares, sample coverage. <a href="https://www.jbs.cam.ac.uk/2025/cambridge-study-sustainable-energy-rising-in-bitcoin-mining/" target="_blank" rel="noopener">jbs.cam.ac.uk</a></li>
+        <li>Baker Botts / Financier Worldwide summary of ERCOT's Large Flexible Load curtailment program, incl. the $24.2M Aug 2023 payment. <a href="https://www.financierworldwide.com/the-evolving-energy-regulatory-landscape-for-cryptocurrency-mining-businesses-opportunities-and-risks" target="_blank" rel="noopener">financierworldwide.com</a></li>
+        <li>Epic Blockchain, on Riot Platforms' reported Q3 2025 curtailment credits. <a href="https://epicblockchain.io/curtailment-demand-response-bitcoin-mining/" target="_blank" rel="noopener">epicblockchain.io</a></li>
+        <li>Utility Dive, reporting Texas Blockchain Council figures for July 2022 curtailment. <a href="https://www.utilitydive.com/news/warren-bitcoin-texas-power-grid-ercot-demand-response/634462/" target="_blank" rel="noopener">utilitydive.com</a></li>
+        <li>IRENA, <em>Renewable Power Generation Costs in 2024</em> — global solar LCOE, 2010 vs. 2024. <a href="https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2025/Jul/IRENA_TEC_RPGC_in_2024_Summary_2025.pdf" target="_blank" rel="noopener">irena.org</a></li>
+        <li>D-Central Technologies, ASIC generational efficiency analysis, cross-referenced with TheMinerMag specs. <a href="https://d-central.tech/exploring-asic-efficiency-breaking-new-ground-in-bitcoin-mining/" target="_blank" rel="noopener">d-central.tech</a></li>
+        <li>Coin Metrics / Cambridge Bitcoin Electricity Consumption Index, network-wide average efficiency, May 2023 vs. Nov 2024. <a href="https://blocksbridge.substack.com/p/bitcoin-energy-consumption-plateau-next-halving" target="_blank" rel="noopener">blocksbridge.substack.com</a></li>
+        <li>CoinDesk, on Bitdeer's announced SEALMINER A4 target of ~5 J/TH (company-stated goal, March 2025). <a href="https://www.coindesk.com/tech/2025/03/13/bitdeer-wants-to-revolutionize-the-asic-manufacturing-market-here-s-how" target="_blank" rel="noopener">coindesk.com</a></li>
+        <li>EE Times, on Triple-1's Kamikaze III chip reaching 10.45 J/TH on TSMC 3nm (November 2025). <a href="https://www.eetimes.com/crypto-mining-asic-goes-deep-sub-threshold-on-3-nm/" target="_blank" rel="noopener">eetimes.com</a></li>
+        <li>IRENA / PV Tech, on projected further firm solar LCOE declines (~30% by 2030, ~40% by 2035). <a href="https://www.pv-tech.org/solar-pv-and-storage-cost-declines-drive-rapid-fall-in-firm-lcoe-says-irena/" target="_blank" rel="noopener">pv-tech.org</a></li>
+        <li>Endless Mining, on chipmakers' publicly discussed 2nm process-node roadmap for future ASICs. <a href="https://endlessmining.com/next-gen-bitcoin-mining-chips/" target="_blank" rel="noopener">endlessmining.com</a></li>
+      </ol>
+      <div class="counter-widget">YOU ARE VISITOR # <span class="counter-digits" id="hitcount">000001</span></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="construction">⚠ SITE UNDER CONSTRUCTION ⚠</div>
+  <p>best viewed at 1280×800 or bigger, but we don't judge</p>
+
+  <div class="signature">
+    <img class="pfp" src="data:image/jpeg;base64,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" alt="dixxxy pfp" />
+    <span class="sig-text">Made By dixxxy 4 Fun</span>
+  </div>
+  <p class="built">built for <a href="https://typemedia.net" target="_blank" rel="noopener">Type Media</a> · not financial or engineering advice · verify before you repost the numbers</p>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:0.15 });
+  document.querySelectorAll('[data-win]').forEach(el=>io.observe(el));
+
+  const barsSection = document.querySelector('.bars-grid');
+  let barsDrawn = false;
+  const barIO = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting && !barsDrawn){
+        barsDrawn = true;
+        document.querySelectorAll('.bar-fill').forEach(b=>{
+          requestAnimationFrame(()=>{ b.style.width = b.dataset.target + '%'; });
+        });
+      }
+    });
+  }, { threshold:0.3 });
+  if(barsSection) barIO.observe(barsSection);
+
+  // silly persistent-feeling hit counter (session-only, purely cosmetic)
+  const n = Math.floor(Math.random()*40000) + 10000;
+  const el = document.getElementById('hitcount');
+  if(el) el.textContent = String(n).padStart(6,'0');
+</script>
+
+</body>
+</html>
